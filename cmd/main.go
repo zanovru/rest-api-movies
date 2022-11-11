@@ -8,16 +8,13 @@ import (
 )
 
 func main() {
-	viper.SetConfigFile("./pkg/common/envs/.env")
+	viper.SetConfigFile(".env")
 	viper.ReadInConfig()
 
-	port := viper.Get("PORT").(string)
-	dbURL := viper.Get("DB_URL").(string)
-
 	r := gin.Default()
-	dbORM := db.Init(dbURL)
+	dbORM := db.Init()
 
 	movies.RegisterRoutes(r, dbORM)
 
-	r.Run(port)
+	r.Run(":3000")
 }
